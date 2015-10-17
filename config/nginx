@@ -1,0 +1,20 @@
+server {
+	listen 9091;
+	root /home/fish/Project/WebBenchmark/;
+	rewrite ^/(.*) /build/index.php last;
+
+	location ~ \.php {
+		include fastcgi_params;
+		fastcgi_index index.php;
+		fastcgi_pass fastcgi_backend;
+	}
+	location / {
+		try_files $uri =404;
+	}
+}
+server {
+	listen 9092;
+	location / {
+		proxy_pass localhost:9090;
+	}
+}
