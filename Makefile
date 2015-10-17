@@ -14,8 +14,8 @@ $(SAMPLE):BUILD
 	sed "s/SAMPLE/$@/g" phpstub.php > build/index.php
 	sed "s/SAMPLE/$@/g" nodestub.js > build/index.js
 	sudo service hhvm restart
-	pm2 start build/index.js -i 1
+	NODE_ENV=production forever start build/index.js
 	ab -n $(AB_N) -c $(AB_C) $(PHP_ADDR) > build/ab_$@_php
 	sudo service hhvm stop
 	ab -n $(AB_N) -c $(AB_C) $(NODE_ADDR) > build/ab_$@_node
-	pm2 stop index
+	forever stop build/index.js
