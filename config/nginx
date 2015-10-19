@@ -15,6 +15,6 @@ server {
 server {
 	listen 9092;
 	location / {
-		proxy_pass localhost:9090;
+		proxy_pass http://localhost:9090;
 	}
 }
